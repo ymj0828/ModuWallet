@@ -24,7 +24,9 @@ export default defineConfig([
       ...tseslint.configs.recommended[0].rules,
       ...pluginReact.configs.flat.recommended.rules,
 
-      // ✅ 이걸 맨 마지막에 둬야 override 됨!
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+
       'react/react-in-jsx-scope': 'off',
     },
     settings: {
@@ -34,4 +36,3 @@ export default defineConfig([
     },
   },
 ]);
-
