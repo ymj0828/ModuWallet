@@ -37,7 +37,7 @@ const SignInPage = () => {
               type="checkbox"
               className="h-5 w-5 cursor-pointer rounded-md border border-gray-300 text-white accent-blue-500"
             />
-            <p> 다음에도 이 이름으로 자동 입력하기</p>
+            <p> 다음에도 이 계정으로 사용하기</p>
           </label>
         </div>
       </div>
