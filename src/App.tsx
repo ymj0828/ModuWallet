@@ -1,41 +1,39 @@
-import { useEffect, useState } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-
-import HomeLayout from '@/components/layouts/HomeLayout';
+import PrivateRoute from '@/components/common/PrivateRoute';
 import AuthLayout from '@/components/layouts/AuthLayout';
-
+import HomeLayout from '@/components/layouts/HomeLayout';
+import { useAuth } from '@/hooks/useAuth';
+import HomePage from '@/pages/home';
 import LoginPage from '@/pages/sign-in';
 import SignUpPage from '@/pages/sign-up';
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+  const { user, isLoading } = useAuth();
 
-  useEffect(() => {
-    const token = localStorage.getItem('access_token');
-    setIsLoggedIn(!!token);
-  }, []);
+  if (isLoading) {
+    return <div className="flex h-screen items-center justify-center">로딩 중...</div>;
+  }
+
+  console.log(user);
 
   return (
     <div className="min-h-screen w-full bg-gray-100">
       <BrowserRouter>
         <Routes>
           <Route
-            path="/"
             element={
-              isLoggedIn ? (
-                <Navigate to="/" replace />
-              ) : (
-                <Navigate to="/sign-in" replace />
-              )
+              <PrivateRoute>
+                <HomeLayout />
+              </PrivateRoute>
             }
-          />
+          >
+            <Route path="/" element={<HomePage />} />
+          </Route>
+
           <Route element={<AuthLayout />}>
             <Route path="/sign-in" element={<LoginPage />} />
             <Route path="/sign-up" element={<SignUpPage />} />
-          </Route>
-          <Route element={<HomeLayout />}>
-            {/* <Route path="/" element={<MainPage />} /> */}
           </Route>
         </Routes>
       </BrowserRouter>

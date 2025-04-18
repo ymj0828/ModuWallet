@@ -2,8 +2,11 @@ import { Link } from 'react-router-dom';
 
 import AuthInput from '@/components/common/AuthInput';
 import BaseButton from '@/components/common/BaseButton';
+import { useLogin } from '@/hooks/useLogin';
 
 const SignInPage = () => {
+  const { form, handleChange, handleLogin, error } = useLogin();
+
   return (
     <>
       <p className="mb-[40px] text-[20px] font-medium">
@@ -18,16 +21,20 @@ const SignInPage = () => {
             <AuthInput
               title="내가 정한 이름"
               name="id"
+              value={form.id}
               placeholder="이름을 입력해 주세요"
               propType="text"
+              onChange={(e) => handleChange('id', e.target.value)}
             />
             <BaseButton size="fit">중복 확인</BaseButton>
           </div>
           <AuthInput
             title="비밀번호"
             name="password"
+            value={form.password}
             placeholder="이름을 입력해 주세요"
             propType="password"
+            onChange={(e) => handleChange('password', e.target.value)}
             isPassword
           />
         </div>
@@ -37,11 +44,13 @@ const SignInPage = () => {
               type="checkbox"
               className="h-5 w-5 cursor-pointer rounded-md border border-gray-300 text-white accent-blue-500"
             />
-            <p> 다음에도 이 이름으로 자동 입력하기</p>
+            <p> 다음에도 이 계정으로 사용하기</p>
           </label>
         </div>
       </div>
-      <BaseButton size="full">내 지갑 열기</BaseButton>
+      <BaseButton size="full" onClick={handleLogin}>
+        내 지갑 열기
+      </BaseButton>
       <Link to="/sign-up" className="mt-6 text-[18px] underline underline-offset-4">
         내 계정 만들러 가기
       </Link>
