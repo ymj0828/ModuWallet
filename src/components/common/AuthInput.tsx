@@ -1,20 +1,24 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 import { Eye, EyeOff } from 'lucide-react';
 
 interface AuthInputProps {
   title: string;
   name: string;
+  value: string;
   placeholder: string;
   propType: 'text' | 'password';
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   isPassword?: boolean;
 }
 
 const AuthInput = ({
   title,
   name,
+  value,
   placeholder,
   propType,
+  onChange,
   isPassword,
 }: AuthInputProps) => {
   const [type, setType] = useState<'text' | 'password'>(propType);
@@ -37,8 +41,10 @@ const AuthInput = ({
           className="h-full w-full rounded-lg border border-gray-300 pl-4 focus-visible:border-gray-500 focus-visible:outline-none"
           id={name}
           name={name}
+          value={value}
           type={type}
           placeholder={placeholder}
+          onChange={onChange}
         />
         {isPassword && (
           <button className="absolute right-3 top-0 translate-y-1/2">

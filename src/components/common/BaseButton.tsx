@@ -4,10 +4,11 @@ import clsx from 'clsx';
 
 interface BaseButtonProps {
   size: 'full' | 'fit';
+  onClick?: () => void;
   children: ReactNode;
 }
 
-const BaseButton = ({ size, children }: BaseButtonProps) => {
+const BaseButton = ({ size, onClick, children }: BaseButtonProps) => {
   return (
     <button
       className={clsx(
@@ -15,6 +16,7 @@ const BaseButton = ({ size, children }: BaseButtonProps) => {
         size === 'full' && 'w-full'
       )}
       type="button"
+      onClick={onClick}
     >
       {children}
     </button>
