@@ -4,7 +4,9 @@ import PrivateRoute from '@/components/common/PrivateRoute';
 import AuthLayout from '@/components/layouts/AuthLayout';
 import HomeLayout from '@/components/layouts/HomeLayout';
 import { useAuth } from '@/hooks/useAuth';
+import HistoryPage from '@/pages/history';
 import HomePage from '@/pages/home';
+import SendPage from '@/pages/send';
 import LoginPage from '@/pages/sign-in';
 import SignUpPage from '@/pages/sign-up';
 
@@ -29,6 +31,8 @@ const App = () => {
             }
           >
             <Route path="/" element={<HomePage />} />
+            <Route path="/send" element={<SendPage />} />
+            <Route path="/history" element={<HistoryPage />} />
           </Route>
 
           <Route element={<AuthLayout />}>

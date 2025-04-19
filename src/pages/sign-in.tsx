@@ -17,17 +17,14 @@ const SignInPage = () => {
       </p>
       <div className="mb-[40px] w-full">
         <div className="flex flex-col gap-8">
-          <div className="flex items-end gap-3">
-            <AuthInput
-              title="내가 정한 이름"
-              name="id"
-              value={form.id}
-              placeholder="이름을 입력해 주세요"
-              propType="text"
-              onChange={(e) => handleChange('id', e.target.value)}
-            />
-            <BaseButton size="fit">중복 확인</BaseButton>
-          </div>
+          <AuthInput
+            title="내가 정한 이름"
+            name="id"
+            value={form.id}
+            placeholder="이름을 입력해 주세요"
+            propType="text"
+            onChange={(e) => handleChange('id', e.target.value)}
+          />
           <AuthInput
             title="비밀번호"
             name="password"
