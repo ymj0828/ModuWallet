@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import {
   collection,
   doc,
@@ -8,6 +9,7 @@ import {
 } from 'firebase/firestore';
 
 import { db } from '@/firebase';
+import { UserItem } from '@/types/user';
 
 export const saveIdIndex = async (id: string, uid: string) => {
   const email = `${id}@moduwallet.com`;
@@ -27,6 +29,25 @@ export const saveUserInfo = async (uid: string, name: string) => {
   });
 };
 
+export const registerTransferPassword = async (uid: string, plainPassword: string) => {
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(plainPassword, salt);
+
+  await setDoc(
+    doc(db, 'users', uid),
+    { transferPassword: hashedPassword },
+    { merge: true }
+  );
+};
+
+export const isTransferPasswordValid = async (uid: string, inputPassword: string) => {
+  const userDoc = await getDoc(doc(db, 'users', uid));
+  const hashed = userDoc.data()?.transferPassword;
+  if (!hashed) return false;
+
+  return bcrypt.compare(inputPassword, hashed);
+};
+
 export const getUserInfo = async (uid: string) => {
   const docSnap = await getDoc(doc(db, 'users', uid));
   if (docSnap.exists()) {
@@ -36,7 +57,7 @@ export const getUserInfo = async (uid: string) => {
   }
 };
 
-export const getAllUsers = async () => {
+export const getAllUsers = async (): Promise<UserItem[]> => {
   const snapshot = await getDocs(collection(db, 'users'));
 
   return snapshot.docs.map((doc) => ({
