@@ -18,6 +18,8 @@ const RegisterPasswordPage = () => {
   const [error, setError] = useState('');
 
   const handleChange = (name: 'password' | 'passwordCheck', value: string) => {
+    if (!/^\d*$/.test(value)) return;
+
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -51,6 +53,8 @@ const RegisterPasswordPage = () => {
           value={form.password}
           placeholder="숫자 4자리를 입력하세요"
           propType="password"
+          maxLength={4}
+          inputMode="numeric"
           isPassword
           onChange={(e) => handleChange('password', e.target.value)}
         />
@@ -60,10 +64,12 @@ const RegisterPasswordPage = () => {
           value={form.passwordCheck}
           placeholder="비밀번호를 다시 입력하세요"
           propType="password"
+          maxLength={4}
+          inputMode="numeric"
           isPassword
           onChange={(e) => handleChange('passwordCheck', e.target.value)}
         />
-        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+        {error && <p className="text-center text-sm text-red-500">{error}</p>}
         <BaseButton size="full" onClick={handleSubmit}>
           등록하기
         </BaseButton>
