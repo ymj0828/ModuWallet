@@ -13,7 +13,7 @@ const BaseButton = ({ size, disabled, onClick, children }: BaseButtonProps) => {
   return (
     <button
       className={clsx(
-        'text-white-to-black hover:bg-primary-500 h-12 whitespace-nowrap rounded-lg bg-primary px-4 font-semibold disabled:bg-gray-400',
+        'text-white-to-black hover:bg-primary-500 h-14 whitespace-nowrap rounded-lg bg-primary px-4 text-[18px] font-medium disabled:bg-gray-400 disabled:text-gray-100',
         size === 'full' && 'w-full'
       )}
       type="button"

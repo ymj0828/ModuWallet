@@ -72,7 +72,7 @@ const PasswordBottomSheet = ({ open, onClose, onSubmit, error }: Props) => {
             </div>
 
             {error && (
-              <p className="absolute left-1/2 top-[28px] mb-2 w-full -translate-x-1/2 text-center text-[16px] text-red-500">
+              <p className="text-red absolute left-1/2 top-[28px] mb-2 w-full -translate-x-1/2 text-center text-[16px]">
                 {error}
               </p>
             )}
@@ -83,7 +83,7 @@ const PasswordBottomSheet = ({ open, onClose, onSubmit, error }: Props) => {
               <button
                 key={i + 1}
                 onClick={() => handleNumberClick(String(i + 1))}
-                className="hover:bg-primary-50 rounded border border-primary p-4 text-primary"
+                className="hover:bg-primary-50 rounded-lg border border-primary p-4 text-primary"
               >
                 {i + 1}
               </button>
@@ -91,13 +91,13 @@ const PasswordBottomSheet = ({ open, onClose, onSubmit, error }: Props) => {
             <div></div>
             <button
               onClick={() => handleNumberClick('0')}
-              className="hover:bg-primary-50 rounded border border-primary p-4 text-primary"
+              className="hover:bg-primary-50 rounded-lg border border-primary p-4 text-primary"
             >
               0
             </button>
             <button
               onClick={handleDelete}
-              className="hover:bg-primary-50 rounded border border-primary p-4 text-red-500"
+              className="hover:bg-primary-50 text-red rounded-lg border border-primary p-4"
             >
               지움
             </button>

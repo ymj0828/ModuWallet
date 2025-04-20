@@ -69,7 +69,7 @@ const RegisterPasswordPage = () => {
           isPassword
           onChange={(e) => handleChange('passwordCheck', e.target.value)}
         />
-        {error && <p className="text-center text-sm text-red-500">{error}</p>}
+        {error && <p className="text-red text-center text-sm">{error}</p>}
         <BaseButton size="full" onClick={handleSubmit}>
           등록하기
         </BaseButton>
