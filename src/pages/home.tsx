@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import BaseButton from '@/components/common/BaseButton';
 import { useAuth } from '@/hooks/useAuth';
@@ -8,6 +8,8 @@ import { getOrInitBalance } from '@/services/wallet.service';
 
 const HomePage = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
+
   const [balance, setBalance] = useState<number>(0);
   const [userName, setUserName] = useState<string>('');
 
@@ -27,6 +29,19 @@ const HomePage = () => {
     fetchData();
   }, [user]);
 
+  const handleTransferClick = async () => {
+    if (!user?.uid) return;
+
+    const userInfo = await getUserInfo(user.uid);
+    const hasPassword = !!userInfo?.transferPassword;
+
+    if (!hasPassword) {
+      navigate('/register-password');
+    } else {
+      navigate('/send');
+    }
+  };
+
   return (
     <div className="mt-4 flex flex-col gap-6">
       <h2 className="text-[24px] font-semibold">{userName}님 안녕하세요!</h2>
@@ -38,7 +53,9 @@ const HomePage = () => {
       </div>
       <div className="flex gap-6">
         <Link to="/send" className="flex-1">
-          <BaseButton size="full">이체</BaseButton>
+          <BaseButton size="full" onClick={handleTransferClick}>
+            이체
+          </BaseButton>
         </Link>
         <Link to="/history" className="flex-1">
           <BaseButton size="full">거래 내역</BaseButton>

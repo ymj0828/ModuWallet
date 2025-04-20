@@ -4,8 +4,10 @@ import PrivateRoute from '@/components/common/PrivateRoute';
 import AuthLayout from '@/components/layouts/AuthLayout';
 import HomeLayout from '@/components/layouts/HomeLayout';
 import { useAuth } from '@/hooks/useAuth';
+import AmountPage from '@/pages/amount';
 import HistoryPage from '@/pages/history';
 import HomePage from '@/pages/home';
+import RegisterPasswordPage from '@/pages/register-password';
 import SendPage from '@/pages/send';
 import LoginPage from '@/pages/sign-in';
 import SignUpPage from '@/pages/sign-up';
@@ -31,8 +33,10 @@ const App = () => {
             }
           >
             <Route path="/" element={<HomePage />} />
-            <Route path="/send" element={<SendPage />} />
             <Route path="/history" element={<HistoryPage />} />
+            <Route path="/send" element={<SendPage />} />
+            <Route path="/send/amount" element={<AmountPage />} />
+            <Route path="/register-password" element={<RegisterPasswordPage />} />
           </Route>
 
           <Route element={<AuthLayout />}>
