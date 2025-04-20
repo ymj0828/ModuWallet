@@ -23,7 +23,7 @@ const App = () => {
   console.log(user);
 
   return (
-    <div className="min-h-screen w-full bg-gray-100">
+    <div className="min-h-screen w-full bg-gray-200">
       <BrowserRouter>
         <Routes>
           <Route

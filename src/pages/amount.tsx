@@ -47,7 +47,9 @@ const AmountPage = () => {
   return (
     <>
       <PageHeader title="계좌 이체" />
-      <p className="text-[32px] font-bold">{toName}님께 얼마를 보낼까요?</p>
+      <p className="text-black-to-white mb-[20px] text-[30px] font-bold">
+        {toName}님께 얼마를 보낼까요?
+      </p>
 
       <AmountSelector
         balance={balance}

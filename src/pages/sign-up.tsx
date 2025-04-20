@@ -9,7 +9,7 @@ const SignUpPage = () => {
 
   return (
     <>
-      <p className="mb-[40px] text-[20px] font-medium">
+      <p className="text-black-to-white mb-[40px] text-[20px] font-medium">
         처음 오셨군요!
         <br />
         앞으로 서비스를 이용하실 때 쓸 이름과
@@ -54,7 +54,10 @@ const SignUpPage = () => {
       <BaseButton size="full" onClick={handleSignUp}>
         계정 만들기
       </BaseButton>
-      <Link to="/sign-in" className="mt-6 text-[18px] underline underline-offset-4">
+      <Link
+        to="/sign-in"
+        className="text-black-to-white mt-6 text-[18px] underline underline-offset-4"
+      >
         이미 만들어둔 계정으로 이용하기
       </Link>
     </>
