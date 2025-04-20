@@ -10,7 +10,7 @@ interface Props {
   error?: string;
 }
 
-const PasswordModal = ({ open, onClose, onSubmit, error }: Props) => {
+const PasswordBottomSheet = ({ open, onClose, onSubmit, error }: Props) => {
   const [password, setPassword] = useState('');
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -60,7 +60,6 @@ const PasswordModal = ({ open, onClose, onSubmit, error }: Props) => {
             이체 비밀번호 입력
           </p>
 
-          {/* 비밀번호 ● 표시 */}
           <div className="relative mb-12">
             <div className="flex justify-center gap-4">
               {[0, 1, 2, 3].map((i) => (
@@ -79,7 +78,6 @@ const PasswordModal = ({ open, onClose, onSubmit, error }: Props) => {
             )}
           </div>
 
-          {/* 키패드 */}
           <div className="mb-8 grid grid-cols-3 gap-4 text-center text-xl">
             {[...Array(9)].map((_, i) => (
               <button
@@ -105,7 +103,6 @@ const PasswordModal = ({ open, onClose, onSubmit, error }: Props) => {
             </button>
           </div>
 
-          {/* 확인 버튼 */}
           <BaseButton size="full" disabled={password.length !== 4} onClick={handleSubmit}>
             확인
           </BaseButton>
@@ -116,4 +113,4 @@ const PasswordModal = ({ open, onClose, onSubmit, error }: Props) => {
   );
 };
 
-export default PasswordModal;
+export default PasswordBottomSheet;
