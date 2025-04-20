@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import AmountSelector from '@/components/amount/AmountSelector';
-import PasswordModal from '@/components/amount/PasswordModal';
+import PasswordBottomSheet from '@/components/amount/PasswordBottomSheet';
 import BaseButton from '@/components/common/BaseButton';
 import PageHeader from '@/components/common/PageHeader';
 import { useAmountTransfer } from '@/hooks/useAmountTransfer';
@@ -64,7 +64,7 @@ const AmountPage = () => {
         이체하기
       </BaseButton>
 
-      <PasswordModal
+      <PasswordBottomSheet
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSubmit={handlePasswordSubmit}

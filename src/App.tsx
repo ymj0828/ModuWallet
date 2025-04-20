@@ -5,6 +5,7 @@ import AuthLayout from '@/components/layouts/AuthLayout';
 import HomeLayout from '@/components/layouts/HomeLayout';
 import { useAuth } from '@/hooks/useAuth';
 import AmountPage from '@/pages/amount';
+import CompletePage from '@/pages/complete';
 import HistoryPage from '@/pages/history';
 import HomePage from '@/pages/home';
 import RegisterPasswordPage from '@/pages/register-password';
@@ -37,6 +38,7 @@ const App = () => {
             <Route path="/send" element={<SendPage />} />
             <Route path="/send/amount" element={<AmountPage />} />
             <Route path="/register-password" element={<RegisterPasswordPage />} />
+            <Route path="/send/complete" element={<CompletePage />} />
           </Route>
 
           <Route element={<AuthLayout />}>

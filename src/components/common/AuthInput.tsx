@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, HTMLAttributes, useState } from 'react';
 
 import { Eye, EyeOff } from 'lucide-react';
 
@@ -9,6 +9,8 @@ interface AuthInputProps {
   placeholder: string;
   propType: 'text' | 'password';
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  maxLength?: number;
+  inputMode?: HTMLAttributes<HTMLInputElement>['inputMode'];
   isPassword?: boolean;
 }
 
@@ -19,16 +21,14 @@ const AuthInput = ({
   placeholder,
   propType,
   onChange,
+  maxLength,
+  inputMode,
   isPassword,
 }: AuthInputProps) => {
   const [type, setType] = useState<'text' | 'password'>(propType);
 
   const handlePasswordVisibleChange = () => {
-    if (type === 'password') {
-      setType('text');
-    } else {
-      setType('password');
-    }
+    setType((prev) => (prev === 'password' ? 'text' : 'password'));
   };
 
   return (
@@ -44,6 +44,8 @@ const AuthInput = ({
           value={value}
           type={type}
           placeholder={placeholder}
+          maxLength={maxLength}
+          inputMode={inputMode}
           onChange={onChange}
         />
         {isPassword && (

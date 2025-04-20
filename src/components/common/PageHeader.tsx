@@ -10,15 +10,15 @@ const PageHeader = ({ title }: PageHeaderProps) => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex items-center justify-center relative mb-10">
+    <div className="relative mb-10 flex items-center justify-center">
       <button
         onClick={() => navigate(-1)}
-        className="flex items-center gap-1 text-base font-medium text-gray-800 absolute left-0"
+        className="text-black-to-white absolute left-0 flex items-center gap-1 text-base font-medium"
       >
         <ChevronLeft size={20} />
         이전
       </button>
-      <h1 className="text-[24px] font-bold text-black">{title}</h1>
+      <h1 className="text-black-to-white text-[24px] font-bold">{title}</h1>
     </div>
   );
 };

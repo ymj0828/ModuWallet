@@ -44,19 +44,21 @@ const HomePage = () => {
 
   return (
     <div className="mt-4 flex flex-col gap-6">
-      <h2 className="text-[24px] font-semibold">{userName}님 안녕하세요!</h2>
-      <div className="bg-primary py-10 px-12 rounded-lg">
-        <p className="text-[18px] font-medium text-white">현재 잔액</p>
-        <p className="text-center text-[40px] font-bold py-2 text-white">
+      <h2 className="text-black-to-white text-[24px] font-semibold">
+        {userName}님 안녕하세요!
+      </h2>
+      <div className="rounded-lg border border-primary px-12 py-10">
+        <p className="text-black-to-white text-[20px] font-medium">현재 잔액</p>
+        <p className="py-3 text-center text-[40px] font-bold text-primary">
           {balance?.toLocaleString()}원
         </p>
       </div>
       <div className="flex gap-6">
-        <Link to="/send" className="flex-1">
+        <div className="flex-1">
           <BaseButton size="full" onClick={handleTransferClick}>
             이체
           </BaseButton>
-        </Link>
+        </div>
         <Link to="/history" className="flex-1">
           <BaseButton size="full">거래 내역</BaseButton>
         </Link>

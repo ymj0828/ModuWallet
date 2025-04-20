@@ -36,11 +36,11 @@ const SendUserList = () => {
         .map((u) => (
           <li
             key={u.uid}
-            className="cursor-pointer rounded-xl bg-slate-200 p-6 hover:bg-slate-300"
+            className="bg-primary-50 hover:bg-primary-100 cursor-pointer rounded-xl"
           >
             <Link
               to={`/send/amount?toUid=${u.uid}`}
-              className="flex items-center justify-between"
+              className="flex items-center justify-between p-6"
             >
               <p className="text-[22px] font-medium">{u.name}</p>
               <p>{countMap[u.uid] ?? 0}회 거래</p>
