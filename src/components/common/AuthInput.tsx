@@ -34,14 +34,14 @@ const AuthInput = ({
   return (
     <div className="w-full">
       <label
-        className="text-black-to-white mb-2 inline-block text-[18px] font-medium"
+        className="mb-2 inline-block text-[18px] font-medium text-black-to-white"
         htmlFor={name}
       >
         {title}
       </label>
       <div className="relative h-14">
         <input
-          className="h-full w-full rounded-lg border border-gray-400 bg-gray-100 pl-4 text-black focus-visible:border-gray-500 focus-visible:outline-none"
+          className="h-full w-full rounded-lg border border-gray-300 bg-gray-100 pl-4 text-black focus-visible:border-gray-400 focus-visible:outline-none"
           id={name}
           name={name}
           value={value}
@@ -56,12 +56,12 @@ const AuthInput = ({
             {type === 'password' ? (
               <EyeOff
                 onClick={handlePasswordVisibleChange}
-                className="text-gray-400 hover:text-gray-500"
+                className="text-gray-300 hover:text-gray-500"
               />
             ) : (
               <Eye
                 onClick={handlePasswordVisibleChange}
-                className="text-gray-400 hover:text-gray-500"
+                className="text-gray-300 hover:text-gray-500"
               />
             )}
           </button>
