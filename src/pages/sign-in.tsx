@@ -9,7 +9,7 @@ const SignInPage = () => {
 
   return (
     <>
-      <p className="text-black-to-white mb-[40px] text-[20px] font-medium">
+      <p className="mb-[40px] text-[20px] font-medium text-black-to-white">
         반가워요!
         <br />
         전에 정해두신 이름과 비밀번호를 입력하시면
@@ -39,7 +39,7 @@ const SignInPage = () => {
           <label className="inline-flex cursor-pointer select-none items-center gap-2">
             <input
               type="checkbox"
-              className="h-5 w-5 cursor-pointer rounded-md border border-gray-400 text-white accent-blue-500"
+              className="accent-blue-500 h-5 w-5 cursor-pointer rounded-md border border-gray-300 text-white"
             />
             <p className="text-black-to-white"> 다음에도 이 계정으로 사용하기</p>
           </label>
@@ -50,7 +50,7 @@ const SignInPage = () => {
       </BaseButton>
       <Link
         to="/sign-up"
-        className="text-black-to-white mt-6 text-[18px] underline underline-offset-4"
+        className="mt-6 text-[18px] text-black-to-white underline underline-offset-4"
       >
         내 계정 만들러 가기
       </Link>

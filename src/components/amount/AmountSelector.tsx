@@ -26,10 +26,10 @@ const AmountSelector = ({
         placeholder="금액을 입력하세요"
         value={amount}
         onChange={onInputChange}
-        className="mb-3 w-full rounded-lg border border-gray-400 bg-gray-100 p-3 text-center text-lg focus-visible:border-gray-500 focus-visible:outline-none"
+        className="mb-3 w-full rounded-lg border border-gray-300 bg-gray-100 p-3 text-center text-lg focus-visible:border-gray-400 focus-visible:outline-none"
       />
 
-      <p className="text-black-to-white mb-6 text-lg">
+      <p className="mb-6 text-lg text-black-to-white">
         출금가능금액 {balance?.toLocaleString() ?? '...'}원
       </p>
 
@@ -38,7 +38,7 @@ const AmountSelector = ({
           <button
             key={amt}
             onClick={() => onAddAmount(amt)}
-            className="hover:bg-primary-50 bg-white-to-black disabled:bg-white-to-black h-12 rounded-lg border border-primary py-2 text-lg font-medium text-primary disabled:opacity-40"
+            className="hover:bg-primary-400 h-12 rounded-lg border border-primary bg-white-to-black py-2 text-lg font-medium text-primary disabled:bg-white-to-black disabled:opacity-40"
             disabled={balance !== null && Number(amount) + amt > balance}
           >
             +{amt.toLocaleString()}
@@ -46,7 +46,7 @@ const AmountSelector = ({
         ))}
       </div>
 
-      {error && <p className="text-red mb-2 text-center">{error}</p>}
+      {error && <p className="mb-2 text-center text-red">{error}</p>}
     </div>
   );
 };

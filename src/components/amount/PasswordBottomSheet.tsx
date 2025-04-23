@@ -53,10 +53,10 @@ const PasswordBottomSheet = ({ open, onClose, onSubmit, error }: Props) => {
     <div className="fixed inset-0 z-50 mx-auto max-w-[600px] bg-black bg-opacity-30">
       <div
         ref={modalRef}
-        className="animate-slide-up bg-background fixed bottom-0 left-0 right-0 mx-auto max-w-[600px] rounded-t-2xl p-8 shadow-xl"
+        className="fixed bottom-0 left-0 right-0 mx-auto max-w-[600px] animate-slide-up rounded-t-2xl bg-background p-8 shadow-xl"
       >
         <div className="mx-auto w-full max-w-md">
-          <p className="text-black-to-white mb-6 text-center text-xl font-bold">
+          <p className="mb-6 text-center text-xl font-bold text-black-to-white">
             이체 비밀번호 입력
           </p>
 
@@ -72,7 +72,7 @@ const PasswordBottomSheet = ({ open, onClose, onSubmit, error }: Props) => {
             </div>
 
             {error && (
-              <p className="text-red absolute left-1/2 top-[28px] mb-2 w-full -translate-x-1/2 text-center text-[16px]">
+              <p className="absolute left-1/2 top-[28px] mb-2 w-full -translate-x-1/2 text-center text-[16px] text-red">
                 {error}
               </p>
             )}
@@ -83,7 +83,7 @@ const PasswordBottomSheet = ({ open, onClose, onSubmit, error }: Props) => {
               <button
                 key={i + 1}
                 onClick={() => handleNumberClick(String(i + 1))}
-                className="hover:bg-primary-50 rounded-lg border border-primary p-4 text-primary"
+                className="hover:bg-primary-400 rounded-lg border border-primary p-4 text-primary"
               >
                 {i + 1}
               </button>
@@ -91,13 +91,13 @@ const PasswordBottomSheet = ({ open, onClose, onSubmit, error }: Props) => {
             <div></div>
             <button
               onClick={() => handleNumberClick('0')}
-              className="hover:bg-primary-50 rounded-lg border border-primary p-4 text-primary"
+              className="hover:bg-primary-400 rounded-lg border border-primary p-4 text-primary"
             >
               0
             </button>
             <button
               onClick={handleDelete}
-              className="hover:bg-primary-50 text-red rounded-lg border border-primary p-4"
+              className="hover:bg-primary-400 rounded-lg border border-primary p-4 text-red"
             >
               지움
             </button>

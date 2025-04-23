@@ -46,19 +46,19 @@ const HomePage = () => {
   return (
     <div className="mt-4 flex flex-col gap-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="text-black-to-white text-[24px] font-semibold">
+        <h2 className="text-[24px] font-semibold text-black-to-white">
           <span className="text-[28px]">{userName}</span>님 안녕하세요!
         </h2>
         <button
           type="button"
-          className="hover:bg-primary-50 rounded-lg border border-primary px-3 py-2 text-[14px] font-semibold text-primary"
+          className="hover:bg-primary-400 rounded-lg border border-primary px-3 py-2 text-[14px] font-semibold text-primary"
           onClick={logout}
         >
           다른 계정으로 전환
         </button>
       </div>
       <div className="rounded-lg border border-primary px-12 py-10">
-        <p className="text-black-to-white text-[20px] font-medium">현재 잔액</p>
+        <p className="text-[20px] font-medium text-black-to-white">현재 잔액</p>
         <p className="py-3 text-center text-[40px] font-bold text-primary">
           {balance?.toLocaleString()}원
         </p>
