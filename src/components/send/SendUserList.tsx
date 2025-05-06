@@ -30,13 +30,13 @@ const SendUserList = () => {
   }, [user]);
 
   return (
-    <ul>
+    <ul className="flex flex-col gap-4">
       {users
         .filter((u) => u.uid !== user?.uid)
         .map((u) => (
           <li
             key={u.uid}
-            className="hover:bg-primary-400 cursor-pointer rounded-lg border border-primary"
+            className="cursor-pointer rounded-lg border border-primary hover:bg-primary-400"
           >
             <Link
               to={`/send/amount?toUid=${u.uid}`}

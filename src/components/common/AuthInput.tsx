@@ -9,6 +9,8 @@ interface AuthInputProps {
   placeholder: string;
   propType: 'text' | 'password';
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
+  minLength?: number;
   maxLength?: number;
   inputMode?: HTMLAttributes<HTMLInputElement>['inputMode'];
   isPassword?: boolean;
@@ -19,8 +21,10 @@ const AuthInput = ({
   name,
   value,
   placeholder,
+  error,
   propType,
   onChange,
+  minLength,
   maxLength,
   inputMode,
   isPassword,
@@ -41,12 +45,13 @@ const AuthInput = ({
       </label>
       <div className="relative h-14">
         <input
-          className="h-full w-full rounded-lg border border-gray-300 bg-gray-100 pl-4 text-black focus-visible:border-gray-400 focus-visible:outline-none"
+          className="h-full w-full rounded-lg border border-gray-300 bg-gray-100 px-4 text-black focus-visible:border-gray-400 focus-visible:outline-none"
           id={name}
           name={name}
           value={value}
           type={type}
           placeholder={placeholder}
+          minLength={minLength}
           maxLength={maxLength}
           inputMode={inputMode}
           onChange={onChange}
@@ -66,6 +71,7 @@ const AuthInput = ({
             )}
           </button>
         )}
+        {error && <p className="mt-1 text-[14px] font-medium text-red">{error}</p>}
       </div>
     </div>
   );
