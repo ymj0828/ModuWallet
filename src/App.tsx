@@ -14,13 +14,11 @@ import LoginPage from '@/pages/sign-in';
 import SignUpPage from '@/pages/sign-up';
 
 const App = () => {
-  const { user, isLoading } = useAuth();
+  const { isLoading } = useAuth();
 
   if (isLoading) {
     return <div className="flex h-screen items-center justify-center">로딩 중...</div>;
   }
-
-  console.log(user);
 
   return (
     <div className="min-h-screen w-full bg-gray-200">

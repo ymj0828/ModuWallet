@@ -41,6 +41,8 @@ const SignUpPage = () => {
             name="password"
             value={form.password}
             placeholder={PLACEHOLDERS.AUTH.REQUIRED_PASSWORD}
+            minLength={6}
+            maxLength={10}
             error={errors.password}
             propType="password"
             onChange={(e) => handleChange('password', e.target.value)}
