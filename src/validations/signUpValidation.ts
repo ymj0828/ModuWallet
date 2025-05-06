@@ -33,8 +33,12 @@ const signUpValidation = (
     }
   }
 
-  if (touched.password && !form.password) {
-    errors.password = ERROR_MESSAGES.AUTH.REQUIRED_PASSWORD;
+  if (touched.password) {
+    if (!form.password) {
+      errors.password = ERROR_MESSAGES.AUTH.REQUIRED_PASSWORD;
+    } else if (form.password.length < 6 || form.password.length > 10) {
+      errors.password = ERROR_MESSAGES.AUTH.PASSWORD_LENGTH;
+    }
   }
 
   if (touched.passwordCheck && !form.passwordCheck) {

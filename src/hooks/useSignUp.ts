@@ -29,11 +29,6 @@ export const useSignUp = () => {
     setErrors(errors);
   };
 
-  useEffect(() => {
-    const { isValid } = signUpValidation(form, touched);
-    setIsFormSubmittable(isValid && isIdChecked);
-  }, [form, isIdChecked, touched]);
-
   const handleSignUp = async () => {
     const { errors: newErrors, isValid } = signUpValidation(form, touched);
 
@@ -54,6 +49,11 @@ export const useSignUp = () => {
       setErrors((prev) => ({ ...prev, id: err.message }));
     }
   };
+
+  useEffect(() => {
+    const { isValid } = signUpValidation(form, touched);
+    setIsFormSubmittable(isValid && isIdChecked);
+  }, [form, isIdChecked, touched]);
 
   const checkDuplicate = async () => {
     const id = form.id.trim();
