@@ -11,19 +11,19 @@ const HomePage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const [balance, setBalance] = useState<number>(0);
   const [userName, setUserName] = useState<string>('');
+  const [balance, setBalance] = useState<number>(0);
 
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
-        const [balanceResult, userInfo] = await Promise.all([
-          getOrInitBalance(user.uid),
+        const [userInfo, balanceResult] = await Promise.all([
           getUserInfo(user.uid),
+          getOrInitBalance(user.uid),
         ]);
 
-        setBalance(balanceResult);
         setUserName(userInfo?.name ?? null);
+        setBalance(balanceResult);
       }
     };
 
@@ -51,7 +51,7 @@ const HomePage = () => {
         </h2>
         <button
           type="button"
-          className="hover:bg-primary-400 rounded-lg border border-primary px-3 py-2 text-[14px] font-semibold text-primary"
+          className="rounded-lg border border-primary px-3 py-2 text-[14px] font-semibold text-primary hover:bg-primary-400"
           onClick={logout}
         >
           다른 계정으로 전환

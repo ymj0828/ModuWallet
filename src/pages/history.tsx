@@ -4,9 +4,12 @@ import clsx from 'clsx';
 
 import PageHeader from '@/components/common/PageHeader';
 import { useAuth } from '@/hooks/useAuth';
-import { Transaction, getTransactions } from '@/services/transaction.service';
-import { getUserMap } from '@/services/user.service';
-import { getOrInitBalance } from '@/services/wallet.service';
+import { getAllUsers } from '@/services/user.service';
+import {
+  type Transaction,
+  getOrInitBalance,
+  getTransactions,
+} from '@/services/wallet.service';
 
 const HistoryPage = () => {
   const { user } = useAuth();
@@ -18,11 +21,17 @@ const HistoryPage = () => {
     if (!user) return;
 
     const fetchData = async () => {
-      const [txs, map, bal] = await Promise.all([
+      const [txs, users, bal] = await Promise.all([
         getTransactions(user.uid),
-        getUserMap(),
+        getAllUsers(),
         getOrInitBalance(user.uid),
       ]);
+
+      const map: Record<string, string> = {};
+
+      users.forEach((user) => {
+        map[user.uid] = user.name;
+      });
 
       setTransactions(txs);
       setUserMap(map);
@@ -35,10 +44,10 @@ const HistoryPage = () => {
   return (
     <>
       <PageHeader title="거래 내역 조회" />
-      <div className="text-black-to-white text-center text-[22px] font-semibold">
+      <div className="text-center text-[22px] font-semibold text-black-to-white">
         현재 잔액: {balance.toLocaleString()}원
       </div>
-      <hr className="border-black-to-white my-[32px]" />
+      <hr className="my-[32px] border-black-to-white" />
       <ul className="flex flex-col gap-4">
         {transactions.map((tx, idx) => (
           <li
@@ -49,7 +58,7 @@ const HistoryPage = () => {
               <p className="text-[14px] text-gray-500">
                 {tx.timestamp?.toDate().toLocaleString()}
               </p>
-              <p className="text-black-to-white text-[20px] font-medium">
+              <p className="text-[20px] font-medium text-black-to-white">
                 {tx.type === 'send'
                   ? `${userMap[tx.to!] ?? tx.to}`
                   : `${userMap[tx.from!] ?? tx.from}`}
@@ -64,7 +73,7 @@ const HistoryPage = () => {
               >
                 {tx.type === 'send' ? '출금' : '입금'}
               </p>
-              <p className="text-black-to-white text-[18px] font-semibold">
+              <p className="text-[18px] font-semibold text-black-to-white">
                 {tx.amount.toLocaleString()}원
               </p>
             </div>
