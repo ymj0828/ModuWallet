@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useAuth } from '@/hooks/useAuth';
-import { countTransactionsByUid, getTransactions } from '@/services/transaction.service';
 import { getAllUsers } from '@/services/user.service';
+import { countTransactionsByUid, getTransactions } from '@/services/wallet.service';
 import { UserItem } from '@/types/user';
 
 const SendUserList = () => {

@@ -1,7 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 
-import { sendMoney } from '@/services/transaction.service';
-import { getOrInitBalance } from '@/services/wallet.service';
+import { getOrInitBalance, sendMoney } from '@/services/wallet.service';
 
 export const useAmountTransfer = (
   uid: string | undefined,
