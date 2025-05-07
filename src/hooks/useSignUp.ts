@@ -5,7 +5,7 @@ import { signUp } from '@/services/auth.service';
 import { isIdDuplicate, saveIdIndex } from '@/services/user.service';
 import signUpValidation, { ErrorState, FormState } from '@/validations/signUpValidation';
 
-export const useSignUp = () => {
+const useSignUp = () => {
   const [form, setForm] = useState<FormState>({
     id: '',
     password: '',
@@ -42,6 +42,7 @@ export const useSignUp = () => {
 
     try {
       const userCredential = await signUp(form.id, form.password);
+      // 생성한 아이디 저장
       await saveIdIndex(form.id, userCredential.user.uid);
       // 회원가입 성공 모달
       // navigate('/sign-in');
@@ -111,3 +112,5 @@ export const useSignUp = () => {
     handleSignUp,
   };
 };
+
+export default useSignUp;
