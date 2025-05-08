@@ -5,7 +5,7 @@ import BaseButton from '@/components/common/BaseButton';
 import { useAuth } from '@/hooks/useAuth';
 import { logout } from '@/services/auth.service';
 import { getUserInfo } from '@/services/user.service';
-import { getOrInitBalance } from '@/services/wallet.service';
+import { getBalance } from '@/services/wallet.service';
 
 const HomePage = () => {
   const { user } = useAuth();
@@ -19,7 +19,7 @@ const HomePage = () => {
       if (user) {
         const [userInfo, balanceResult] = await Promise.all([
           getUserInfo(user.uid),
-          getOrInitBalance(user.uid),
+          getBalance(user.uid),
         ]);
 
         setUserName(userInfo?.name ?? null);

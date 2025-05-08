@@ -5,6 +5,7 @@ import AmountSelector from '@/components/amount/AmountSelector';
 import PasswordBottomSheet from '@/components/amount/PasswordBottomSheet';
 import BaseButton from '@/components/common/BaseButton';
 import PageHeader from '@/components/common/PageHeader';
+import { ERROR_MESSAGES } from '@/constants/errorMessages';
 import { useAmountTransfer } from '@/hooks/useAmountTransfer';
 import { useAuth } from '@/hooks/useAuth';
 import { getUserInfo, isTransferPasswordValid } from '@/services/user.service';
@@ -17,37 +18,35 @@ const AmountPage = () => {
 
   const [toName, setToName] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [authError, setAuthError] = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (!toUid) return;
     getUserInfo(toUid).then((userInfo) => setToName(userInfo?.name ?? '(이름 없음)'));
   }, [toUid]);
 
-  const { balance, amount, error, submit, handleInputChange, handleAddAmount } =
+  const { balance, amount, handleSendSubmit, handleInputChange, handleAddAmount } =
     useAmountTransfer(user?.uid, toUid, toName);
-
-  const handleTransfer = () => {
-    setAuthError('');
-    setIsModalOpen(true);
-  };
 
   const handlePasswordSubmit = async (password: string) => {
     if (!user?.uid) return;
+
     const isValid = await isTransferPasswordValid(user.uid, password);
+
     if (!isValid) {
-      setAuthError('비밀번호가 일치하지 않습니다.');
+      setError(ERROR_MESSAGES.AUTH.PASSWORD_NOT_MATCH);
       return;
     }
 
-    await submit();
+    await handleSendSubmit();
+
     navigate('/send/complete');
   };
 
   return (
     <>
       <PageHeader title="계좌 이체" />
-      <p className="text-black-to-white mb-[20px] text-[30px] font-bold">
+      <p className="mb-[20px] text-[30px] font-bold text-black-to-white">
         {toName}님께 얼마를 보낼까요?
       </p>
 
@@ -56,12 +55,11 @@ const AmountPage = () => {
         amount={amount}
         onAddAmount={handleAddAmount}
         onInputChange={handleInputChange}
-        error={error}
       />
       <BaseButton
         size="full"
         disabled={amount === '' || amount === '0'}
-        onClick={handleTransfer}
+        onClick={() => setIsModalOpen(true)}
       >
         이체하기
       </BaseButton>
@@ -70,7 +68,8 @@ const AmountPage = () => {
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSubmit={handlePasswordSubmit}
-        error={authError}
+        error={error}
+        onError={(message) => setError(message)}
       />
     </>
   );

@@ -41,9 +41,7 @@ const useSignUp = () => {
     }
 
     try {
-      const userCredential = await signUp(form.id, form.password);
-      // 생성한 아이디 저장
-      await saveIdIndex(form.id, userCredential.user.uid);
+      await signUp(form.id, form.password);
       // 회원가입 성공 모달
       // navigate('/sign-in');
     } catch (err: any) {

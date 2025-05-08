@@ -5,11 +5,7 @@ import clsx from 'clsx';
 import PageHeader from '@/components/common/PageHeader';
 import { useAuth } from '@/hooks/useAuth';
 import { getAllUsers } from '@/services/user.service';
-import {
-  type Transaction,
-  getOrInitBalance,
-  getTransactions,
-} from '@/services/wallet.service';
+import { type Transaction, getBalance, getTransactions } from '@/services/wallet.service';
 
 const HistoryPage = () => {
   const { user } = useAuth();
@@ -24,7 +20,7 @@ const HistoryPage = () => {
       const [txs, users, bal] = await Promise.all([
         getTransactions(user.uid),
         getAllUsers(),
-        getOrInitBalance(user.uid),
+        getBalance(user.uid),
       ]);
 
       const map: Record<string, string> = {};

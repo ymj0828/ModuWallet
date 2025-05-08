@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
+import { X } from 'lucide-react';
+
 import BaseButton from '@/components/common/BaseButton';
 
 interface Props {
@@ -8,9 +10,10 @@ interface Props {
   onClose: () => void;
   onSubmit: (password: string) => void;
   error?: string;
+  onError: (prev: string) => void;
 }
 
-const PasswordBottomSheet = ({ open, onClose, onSubmit, error }: Props) => {
+const PasswordBottomSheet = ({ open, onClose, onSubmit, error, onError }: Props) => {
   const [password, setPassword] = useState('');
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -32,7 +35,10 @@ const PasswordBottomSheet = ({ open, onClose, onSubmit, error }: Props) => {
   }, [onClose]);
 
   const handleNumberClick = (digit: string) => {
+    onError('');
+
     if (password.length >= 4) return;
+
     setPassword((prev) => prev + digit);
   };
 
@@ -43,6 +49,7 @@ const PasswordBottomSheet = ({ open, onClose, onSubmit, error }: Props) => {
   const handleSubmit = () => {
     if (password.length === 4) {
       onSubmit(password);
+
       setPassword('');
     }
   };
@@ -50,11 +57,14 @@ const PasswordBottomSheet = ({ open, onClose, onSubmit, error }: Props) => {
   if (!open) return null;
 
   return createPortal(
-    <div className="fixed inset-0 z-50 mx-auto max-w-[600px] bg-black bg-opacity-30">
+    <div className="fixed inset-0 z-50 mx-auto max-w-[600px] bg-black bg-opacity-30 dark:bg-opacity-60">
       <div
         ref={modalRef}
-        className="fixed bottom-0 left-0 right-0 mx-auto max-w-[600px] animate-slide-up rounded-t-2xl bg-background p-8 shadow-xl"
+        className="fixed bottom-0 left-0 right-0 mx-auto max-w-[600px] animate-slide-up rounded-t-3xl border border-primary bg-background p-8 shadow-xl"
       >
+        <button className="absolute right-5 top-5" onClick={() => onClose()}>
+          <X className="text-black-to-white" size={28} />
+        </button>
         <div className="mx-auto w-full max-w-md">
           <p className="mb-6 text-center text-xl font-bold text-black-to-white">
             이체 비밀번호 입력
@@ -83,7 +93,7 @@ const PasswordBottomSheet = ({ open, onClose, onSubmit, error }: Props) => {
               <button
                 key={i + 1}
                 onClick={() => handleNumberClick(String(i + 1))}
-                className="hover:bg-primary-400 rounded-lg border border-primary p-4 text-primary"
+                className="rounded-lg border border-primary p-4 text-primary hover:bg-primary-400"
               >
                 {i + 1}
               </button>
@@ -91,13 +101,13 @@ const PasswordBottomSheet = ({ open, onClose, onSubmit, error }: Props) => {
             <div></div>
             <button
               onClick={() => handleNumberClick('0')}
-              className="hover:bg-primary-400 rounded-lg border border-primary p-4 text-primary"
+              className="rounded-lg border border-primary p-4 text-primary hover:bg-primary-400"
             >
               0
             </button>
             <button
               onClick={handleDelete}
-              className="hover:bg-primary-400 rounded-lg border border-primary p-4 text-red"
+              className="rounded-lg border border-primary p-4 text-red hover:bg-primary-400"
             >
               지움
             </button>

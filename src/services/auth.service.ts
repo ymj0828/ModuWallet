@@ -6,6 +6,7 @@ import {
 
 import { auth } from '@/firebase';
 import { saveIdIndex, saveUserInfo } from '@/services/user.service';
+import { registerWallet } from '@/services/wallet.service';
 
 const getEmail = (id: string) => `${id}@moduwallet.com`;
 
@@ -23,6 +24,8 @@ export const signUp = async (id: string, password: string) => {
   await saveUserInfo(uid, id);
   // 유저 아이디를 firestore에 저장
   await saveIdIndex(uid, id);
+  // 유저 계좌 생성
+  await registerWallet(uid);
 
   return userCredential;
 };

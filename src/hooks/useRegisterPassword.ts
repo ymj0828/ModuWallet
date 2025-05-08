@@ -33,10 +33,10 @@ const useRegisterPassword = () => {
     if (!user?.uid) return;
 
     try {
-      // await registerTransferPassword(user.uid, form.password);
+      await registerTransferPassword(user.uid, form.password);
       // 비밀번호 등록 성공 모달
       alert('이체 비밀번호가 등록되었습니다.');
-      // navigate('/');
+      navigate('/');
     } catch (err: any) {
       setErrors((prev) => ({ ...prev, id: err.message }));
     }

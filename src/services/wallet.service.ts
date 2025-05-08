@@ -24,48 +24,46 @@ export type Transaction = {
 // 초기 잔액
 const DEFAULT_BALANCE = 50000;
 
-export const getOrInitBalance = async (uid: string) => {
+// 계좌 생성 및 초기 잔액 추가
+export const registerWallet = async (uid: string) => {
   const userRef = doc(db, 'wallet', uid);
-  const userSnap = await getDoc(userRef);
 
-  // 계좌가 없다면 새로 생성하고 초기 잔액 추가
-  if (!userSnap.exists()) {
-    await setDoc(userRef, {
-      balance: DEFAULT_BALANCE,
-    });
-    return DEFAULT_BALANCE;
-  }
-
-  const data = userSnap.data();
-
-  // 이미 잔액이 있다면 그대로 반환
-  return data.balance;
+  await setDoc(userRef, {
+    balance: DEFAULT_BALANCE,
+  });
 };
 
+// 잔액 조회
+export const getBalance = async (uid: string) => {
+  const snapshot = await getDoc(doc(db, 'wallet', uid));
+
+  const data = snapshot.data();
+
+  return data?.balance;
+};
+
+// 입력한 금액 이체
 export const sendMoney = async (fromUid: string, toUid: string, amount: number) => {
   const fromRef = doc(db, 'wallet', fromUid);
   const toRef = doc(db, 'wallet', toUid);
 
+  // 여러 작업을 한 번에 수행하기 위해 runTransaction 사용
   await runTransaction(db, async (transaction) => {
     const fromSnap = await transaction.get(fromRef);
     const toSnap = await transaction.get(toRef);
 
-    if (!fromSnap.exists() || !toSnap.exists()) {
-      throw new Error('보내는 사람 또는 받는 사람 정보가 없습니다.');
-    }
+    // 둘 중 하나라도 존재하지 않으면 실행 중단
+    if (!fromSnap.exists() || !toSnap.exists()) return;
 
-    const fromBalance = fromSnap.data().balance ?? 0;
-    const toBalance = toSnap.data().balance ?? 0;
+    const fromBalance = fromSnap.data().balance;
+    const toBalance = toSnap.data().balance;
 
-    if (fromBalance < amount) {
-      throw new Error('잔액이 부족합니다.');
-    }
-
+    // 보내는 사람과 받는 사람의 잔액을 동시에 업데이트
     transaction.update(fromRef, { balance: fromBalance - amount });
     transaction.update(toRef, { balance: toBalance + amount });
   });
 
-  // 거래 내역 기록
+  // 보내는 사람과 받는 사람의 거래 내역 기록을 동시에 업데이트
   await Promise.all([
     addDoc(collection(db, 'wallet', fromUid, 'transactions'), {
       type: 'send',
@@ -86,6 +84,7 @@ export const sendMoney = async (fromUid: string, toUid: string, amount: number) 
 export const getTransactions = async (uid: string): Promise<Transaction[]> => {
   const q = query(
     collection(db, 'wallet', uid, 'transactions'),
+    // 시간순 정렬
     orderBy('timestamp', 'desc')
   );
 
@@ -94,12 +93,15 @@ export const getTransactions = async (uid: string): Promise<Transaction[]> => {
   return snapshot.docs.map((doc) => doc.data() as Transaction);
 };
 
+// 거래 횟수 추출하기
 export const countTransactionsByUid = (transactions: Transaction[], myUid: string) => {
   const counts: Record<string, number> = {};
 
   transactions.forEach((tx) => {
     const targetUid = tx.type === 'send' ? tx.to : tx.from;
+
     if (!targetUid || targetUid === myUid) return;
+
     counts[targetUid] = (counts[targetUid] ?? 0) + 1;
   });
 
