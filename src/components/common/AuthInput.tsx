@@ -54,6 +54,7 @@ const AuthInput = ({
           minLength={minLength}
           maxLength={maxLength}
           inputMode={inputMode}
+          autoComplete="off"
           onChange={onChange}
         />
         {isPassword && (
