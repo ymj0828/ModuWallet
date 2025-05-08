@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 
 import AuthInput from '@/components/common/AuthInput';
 import BaseButton from '@/components/common/BaseButton';
-import { useSignIn } from '@/hooks/useSignIn';
+import { PLACEHOLDERS } from '@/constants/placeholders';
+import useSignIn from '@/hooks/useSignIn';
 
 const SignInPage = () => {
   const { form, errors, isFormSubmittable, handleChange, handleSigIn } = useSignIn();
@@ -20,7 +21,7 @@ const SignInPage = () => {
           title="내가 정한 이름"
           name="id"
           value={form.id}
-          placeholder="이름을 입력해 주세요"
+          placeholder={PLACEHOLDERS.AUTH.REQUIRED_ID}
           error={errors.id}
           propType="text"
           onChange={(e) => handleChange('id', e.target.value)}
@@ -29,7 +30,7 @@ const SignInPage = () => {
           title="비밀번호"
           name="password"
           value={form.password}
-          placeholder="이름을 입력해 주세요"
+          placeholder={PLACEHOLDERS.AUTH.REQUIRED_PASSWORD}
           error={errors.password}
           propType="password"
           onChange={(e) => handleChange('password', e.target.value)}

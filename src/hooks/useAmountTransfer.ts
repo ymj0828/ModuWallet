@@ -1,7 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 
-import { sendMoney } from '@/services/transaction.service';
-import { getOrInitBalance } from '@/services/wallet.service';
+import { getBalance, sendMoney } from '@/services/wallet.service';
 
 export const useAmountTransfer = (
   uid: string | undefined,
@@ -10,22 +9,28 @@ export const useAmountTransfer = (
 ) => {
   const [balance, setBalance] = useState<number | null>(null);
   const [amount, setAmount] = useState('');
-  const [error, setError] = useState('');
 
   useEffect(() => {
     if (!uid) return;
-    getOrInitBalance(uid).then(setBalance);
+
+    const fetchBalance = async () => {
+      const balance = await getBalance(uid);
+      setBalance(balance);
+    };
+
+    fetchBalance();
   }, [uid]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value;
 
-    // 숫자 외 문자 제거
+    // 숫자만 허용
     if (!/^\d*$/.test(raw)) return;
 
-    // 앞자리 0 제거 (단, 빈 문자열은 허용)
+    // 빈 문자열은 유지하고 빈 문자열이 아니면 숫자로 바꾼 후(앞자리 0 제거 위함) 문자열로 변환
     const cleaned = raw === '' ? '' : String(Number(raw));
 
+    // 입력값이 잔액을 초과하면 잔액으로 고정하고 그렇지 않으면 입력값 그대로 저장
     if (balance !== null && Number(cleaned) > balance) {
       setAmount(String(balance));
     } else {
@@ -35,24 +40,21 @@ export const useAmountTransfer = (
 
   const handleAddAmount = (value: number) => {
     const current = Number(amount) || 0;
-    const next = current + value;
 
-    if (balance !== null && next > balance) return;
+    // 클릭한 버튼의 값 더하기
+    const newAmount = current + value;
 
-    setAmount(String(next));
+    setAmount(String(newAmount));
   };
 
-  const submit = async () => {
+  const handleSendSubmit = async () => {
     if (!uid || !toUid || !balance) return;
 
     const numericAmount = Number(amount);
 
-    if (numericAmount > balance) {
-      setError('잔액이 부족합니다.');
-      return;
-    }
-
     await sendMoney(uid, toUid, numericAmount);
+
+    // 이체 확인 페이지에 이체 정보를 전달하기 위해 로컬스토리지에 저장
     localStorage.setItem(
       'lastTransfer',
       JSON.stringify({
@@ -67,8 +69,7 @@ export const useAmountTransfer = (
   return {
     balance,
     amount,
-    error,
-    submit,
+    handleSendSubmit,
     handleInputChange,
     handleAddAmount,
   };

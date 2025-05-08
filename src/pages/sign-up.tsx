@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import AuthInput from '@/components/common/AuthInput';
 import BaseButton from '@/components/common/BaseButton';
 import { PLACEHOLDERS } from '@/constants/placeholders';
-import { useSignUp } from '@/hooks/useSignUp';
+import useSignUp from '@/hooks/useSignUp';
 
 const SignUpPage = () => {
   const { form, errors, isFormSubmittable, checkDuplicate, handleChange, handleSignUp } =

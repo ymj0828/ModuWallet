@@ -3,20 +3,13 @@ import { ChangeEvent } from 'react';
 interface Props {
   balance: number | null;
   amount: string;
-  error: string;
   onInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onAddAmount: (value: number) => void;
 }
 
 const PRESET_AMOUNTS = [1000, 10000, 50000, 100000];
 
-const AmountSelector = ({
-  balance,
-  amount,
-  error,
-  onInputChange,
-  onAddAmount,
-}: Props) => {
+const AmountSelector = ({ balance, amount, onInputChange, onAddAmount }: Props) => {
   return (
     <div>
       <input
@@ -38,15 +31,13 @@ const AmountSelector = ({
           <button
             key={amt}
             onClick={() => onAddAmount(amt)}
-            className="hover:bg-primary-400 h-12 rounded-lg border border-primary bg-white-to-black py-2 text-lg font-medium text-primary disabled:bg-white-to-black disabled:opacity-40"
+            className="h-12 rounded-lg border border-primary bg-white-to-black py-2 text-lg font-medium text-primary hover:bg-primary-400 disabled:bg-white-to-black disabled:opacity-40"
             disabled={balance !== null && Number(amount) + amt > balance}
           >
             +{amt.toLocaleString()}
           </button>
         ))}
       </div>
-
-      {error && <p className="mb-2 text-center text-red">{error}</p>}
     </div>
   );
 };

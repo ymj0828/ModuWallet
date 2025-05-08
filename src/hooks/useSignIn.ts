@@ -10,12 +10,11 @@ type LoginFormState = {
   password: string;
 };
 
-export const useSignIn = () => {
+const useSignIn = () => {
   const [form, setForm] = useState<LoginFormState>({
     id: '',
     password: '',
   });
-
   const [errors, setErrors] = useState<ErrorState>({});
   const [isFormSubmittable, setIsFormSubmittable] = useState(false);
   const [touched, setTouched] = useState<Partial<Record<keyof FormState, boolean>>>({});
@@ -53,3 +52,5 @@ export const useSignIn = () => {
     handleSigIn,
   };
 };
+
+export default useSignIn;

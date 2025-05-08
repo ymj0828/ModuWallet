@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 
 import { ERROR_MESSAGES } from '@/constants/errorMessages';
 import { signUp } from '@/services/auth.service';
-import { isIdDuplicate, saveIdIndex } from '@/services/user.service';
+import { isIdDuplicate } from '@/services/user.service';
 import signUpValidation, { ErrorState, FormState } from '@/validations/signUpValidation';
 
-export const useSignUp = () => {
+const useSignUp = () => {
   const [form, setForm] = useState<FormState>({
     id: '',
     password: '',
@@ -41,8 +41,7 @@ export const useSignUp = () => {
     }
 
     try {
-      const userCredential = await signUp(form.id, form.password);
-      await saveIdIndex(form.id, userCredential.user.uid);
+      await signUp(form.id, form.password);
       // 회원가입 성공 모달
       // navigate('/sign-in');
     } catch (err: any) {
@@ -111,3 +110,5 @@ export const useSignUp = () => {
     handleSignUp,
   };
 };
+
+export default useSignUp;

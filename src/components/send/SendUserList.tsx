@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useAuth } from '@/hooks/useAuth';
-import { countTransactionsByUid, getTransactions } from '@/services/transaction.service';
 import { getAllUsers } from '@/services/user.service';
+import { countTransactionsByUid, getTransactions } from '@/services/wallet.service';
 import { UserItem } from '@/types/user';
 
 const SendUserList = () => {
   const { user } = useAuth();
+
   const [users, setUsers] = useState<UserItem[]>([]);
   const [countMap, setCountMap] = useState<Record<string, number>>({});
 
@@ -23,6 +24,7 @@ const SendUserList = () => {
       setUsers(userList);
 
       const counts = countTransactionsByUid(transactions, user.uid);
+
       setCountMap(counts);
     };
 
@@ -32,18 +34,20 @@ const SendUserList = () => {
   return (
     <ul className="flex flex-col gap-4">
       {users
-        .filter((u) => u.uid !== user?.uid)
-        .map((u) => (
+        .filter((otherUser) => otherUser.uid !== user?.uid)
+        .map((otherUser) => (
           <li
-            key={u.uid}
+            key={otherUser.uid}
             className="cursor-pointer rounded-lg border border-primary hover:bg-primary-400"
           >
             <Link
-              to={`/send/amount?toUid=${u.uid}`}
+              to={`/send/amount?toUid=${otherUser.uid}`}
               className="flex items-center justify-between p-5"
             >
-              <p className="text-[22px] font-medium text-black-to-white">{u.name}</p>
-              <p className="text-black-to-white">{countMap[u.uid] ?? 0}회 거래</p>
+              <p className="text-[22px] font-medium text-black-to-white">
+                {otherUser.name}
+              </p>
+              <p className="text-black-to-white">{countMap[otherUser.uid] ?? 0}회 거래</p>
             </Link>
           </li>
         ))}
