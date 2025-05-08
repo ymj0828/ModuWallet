@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { ERROR_MESSAGES } from '@/constants/errorMessages';
 import { signUp } from '@/services/auth.service';
-import { isIdDuplicate, saveIdIndex } from '@/services/user.service';
+import { isIdDuplicate } from '@/services/user.service';
 import signUpValidation, { ErrorState, FormState } from '@/validations/signUpValidation';
 
 const useSignUp = () => {
@@ -46,7 +46,6 @@ const useSignUp = () => {
       // navigate('/sign-in');
     } catch (err: any) {
       setErrors((prev) => ({ ...prev, id: err.message }));
-      setErrors((prev) => ({ ...prev, id: err.message }));
     }
   };
 
@@ -55,44 +54,7 @@ const useSignUp = () => {
     setIsFormSubmittable(isValid && isIdChecked);
   }, [form, isIdChecked, touched]);
 
-  useEffect(() => {
-    const { isValid } = signUpValidation(form, touched);
-    setIsFormSubmittable(isValid && isIdChecked);
-  }, [form, isIdChecked, touched]);
-
   const checkDuplicate = async () => {
-    const id = form.id.trim();
-
-    if (id === '') {
-      setErrors((prev) => ({
-        ...prev,
-        id: ERROR_MESSAGES.AUTH.REQUIRED_ID,
-      }));
-      setIsIdChecked(false);
-      return;
-    }
-
-    if (id.length < 2 || id.length > 10) {
-      setErrors((prev) => ({
-        ...prev,
-        id: ERROR_MESSAGES.AUTH.ID_LENGTH,
-      }));
-      setIsIdChecked(false);
-      return;
-    }
-
-    const isValidFormat = /^[가-힣a-zA-Z0-9]+$/.test(id);
-    if (!isValidFormat) {
-      setErrors((prev) => ({
-        ...prev,
-        id: ERROR_MESSAGES.AUTH.ID_INVALID_FORMAT,
-      }));
-      setIsIdChecked(false);
-      return;
-    }
-
-    const isDuplicate = await isIdDuplicate(id);
-
     const id = form.id.trim();
 
     if (id === '') {
