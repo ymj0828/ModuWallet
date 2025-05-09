@@ -2,12 +2,24 @@ import { Link } from 'react-router-dom';
 
 import AuthInput from '@/components/common/AuthInput';
 import BaseButton from '@/components/common/BaseButton';
+import ConfirmModal from '@/components/common/ConfirmModal';
 import { PLACEHOLDERS } from '@/constants/placeholders';
 import useSignUp from '@/hooks/useSignUp';
 
 const SignUpPage = () => {
-  const { form, errors, isFormSubmittable, checkDuplicate, handleChange, handleSignUp } =
-    useSignUp();
+  const {
+    form,
+    errors,
+    isFormSubmittable,
+    isIdValid,
+    checkDuplicate,
+    handleChange,
+    handleSignUp,
+    isSignUpSuccessModalOpen,
+    handleSignUpSuccessModalClose,
+    isIdDuplicateSuccessModalOpen,
+    handleIdDuplicateSuccessModalClose,
+  } = useSignUp();
 
   return (
     <>
@@ -18,6 +30,7 @@ const SignUpPage = () => {
         <br />
         비밀번호를 먼저 만들어주세요.
       </p>
+
       <div className="mb-[40px] w-full">
         <div className="flex flex-col gap-8">
           <div className="flex items-end gap-3">
@@ -32,7 +45,7 @@ const SignUpPage = () => {
               propType="text"
               onChange={(e) => handleChange('id', e.target.value)}
             />
-            <BaseButton size="fit" onClick={checkDuplicate}>
+            <BaseButton size="fit" disabled={!isIdValid} onClick={checkDuplicate}>
               중복 확인
             </BaseButton>
           </div>
@@ -60,15 +73,29 @@ const SignUpPage = () => {
           />
         </div>
       </div>
+
       <BaseButton size="full" onClick={handleSignUp} disabled={!isFormSubmittable}>
         계정 만들기
       </BaseButton>
+
       <Link
         to="/sign-in"
         className="mt-6 text-[18px] text-black-to-white underline underline-offset-4"
       >
         이미 만들어둔 계정으로 이용하기
       </Link>
+
+      <ConfirmModal
+        text="회원가입이 완료되었습니다"
+        open={isSignUpSuccessModalOpen}
+        onClose={handleSignUpSuccessModalClose}
+      />
+
+      <ConfirmModal
+        text="사용 가능한 이름입니다"
+        open={isIdDuplicateSuccessModalOpen}
+        onClose={handleIdDuplicateSuccessModalClose}
+      />
     </>
   );
 };

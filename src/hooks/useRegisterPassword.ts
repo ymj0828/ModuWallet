@@ -19,6 +19,7 @@ const useRegisterPassword = () => {
   const [errors, setErrors] = useState<ErrorState>({});
   const [isFormSubmittable, setIsFormSubmittable] = useState(false);
   const [touched, setTouched] = useState<Partial<Record<keyof FormState, boolean>>>({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleChange = (name: keyof FormState, value: string) => {
     const updatedForm = { ...form, [name]: value };
@@ -34,12 +35,15 @@ const useRegisterPassword = () => {
 
     try {
       await registerTransferPassword(user.uid, form.password);
-      // 비밀번호 등록 성공 모달
-      alert('이체 비밀번호가 등록되었습니다.');
-      navigate('/');
+      setIsModalOpen(true);
     } catch (err: any) {
       setErrors((prev) => ({ ...prev, id: err.message }));
     }
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    navigate('/');
   };
 
   useEffect(() => {
@@ -51,8 +55,10 @@ const useRegisterPassword = () => {
     form,
     errors,
     isFormSubmittable,
+    isModalOpen,
     handleChange,
     handleRegisterPassword,
+    handleModalClose,
   };
 };
 
