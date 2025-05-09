@@ -28,7 +28,7 @@ const signUpValidation = (
       errors.id = ERROR_MESSAGES.AUTH.REQUIRED_ID;
     } else if (id.length < 2 || id.length > 10) {
       errors.id = ERROR_MESSAGES.AUTH.ID_LENGTH;
-    } else if (!/^[가-힣a-zA-Z0-9]+$/.test(id)) {
+    } else if (!/^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9]+$/.test(id)) {
       errors.id = ERROR_MESSAGES.AUTH.ID_INVALID_FORMAT;
     }
   }
