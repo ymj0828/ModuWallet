@@ -1,16 +1,25 @@
 import AuthInput from '@/components/common/AuthInput';
 import BaseButton from '@/components/common/BaseButton';
+import ConfirmModal from '@/components/common/ConfirmModal';
 import PageHeader from '@/components/common/PageHeader';
 import { PLACEHOLDERS } from '@/constants/placeholders';
 import useRegisterPassword from '@/hooks/useRegisterPassword';
 
 const RegisterPasswordPage = () => {
-  const { form, errors, isFormSubmittable, handleChange, handleRegisterPassword } =
-    useRegisterPassword();
+  const {
+    form,
+    errors,
+    isFormSubmittable,
+    isModalOpen,
+    handleChange,
+    handleRegisterPassword,
+    handleModalClose,
+  } = useRegisterPassword();
 
   return (
     <>
       <PageHeader title="이체 비밀번호 등록" />
+
       <div className="mb-[40px] flex flex-col gap-8">
         <AuthInput
           title="비밀번호"
@@ -37,6 +46,7 @@ const RegisterPasswordPage = () => {
           isPassword
         />
       </div>
+      
       <BaseButton
         size="full"
         onClick={handleRegisterPassword}
@@ -44,6 +54,12 @@ const RegisterPasswordPage = () => {
       >
         등록하기
       </BaseButton>
+
+      <ConfirmModal
+        text="이체 비밀번호가 등록되었습니다"
+        open={isModalOpen}
+        onClose={handleModalClose}
+      />
     </>
   );
 };

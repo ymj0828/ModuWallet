@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { type FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ERROR_MESSAGES } from '@/constants/errorMessages';
@@ -30,7 +30,9 @@ const useSignIn = () => {
     setErrors(errors);
   };
 
-  const handleSigIn = async () => {
+  const handleSignIn = async (e: FormEvent) => {
+    e.preventDefault();
+
     try {
       await login(form.id, form.password);
       navigate('/');
@@ -49,7 +51,7 @@ const useSignIn = () => {
     errors,
     isFormSubmittable,
     handleChange,
-    handleSigIn,
+    handleSignIn,
   };
 };
 
