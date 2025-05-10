@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 import logo from '@/assets/images/logo.png';
-import ThemeModeButton from '@/components/common/themeModeButton';
+import ThemeModeButton from '@/components/common/ThemeModeButton';
 
 const Header = () => {
   return (
