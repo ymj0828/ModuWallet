@@ -40,10 +40,13 @@ const HistoryPage = () => {
   return (
     <>
       <PageHeader title="거래 내역 조회" />
+
       <div className="text-center text-[22px] font-semibold text-black-to-white">
         현재 잔액: {balance.toLocaleString()}원
       </div>
+
       <hr className="my-[32px] border-black-to-white" />
+
       <ul className="flex flex-col gap-4">
         {transactions.map((tx, idx) => (
           <li
@@ -51,7 +54,7 @@ const HistoryPage = () => {
             className="flex justify-between rounded-lg border border-primary p-4"
           >
             <div className="flex flex-col justify-between gap-1">
-              <p className="text-[14px] text-gray-500">
+              <p className="text-[14px] text-gray-400">
                 {tx.timestamp?.toDate().toLocaleString()}
               </p>
               <p className="text-[20px] font-medium text-black-to-white">
