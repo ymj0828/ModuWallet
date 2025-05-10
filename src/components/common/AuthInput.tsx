@@ -43,9 +43,10 @@ const AuthInput = ({
       >
         {title}
       </label>
+
       <div className="relative h-14">
         <input
-          className="h-full w-full rounded-lg border border-gray-300 bg-gray-100 px-4 text-black focus-visible:border-gray-400 focus-visible:outline-none"
+          className="h-full w-full rounded-lg border border-gray-300 bg-gray-100 px-4 text-black-to-white focus-visible:border-gray-400 focus-visible:outline-none"
           id={name}
           name={name}
           value={value}
@@ -57,8 +58,13 @@ const AuthInput = ({
           autoComplete="off"
           onChange={onChange}
         />
+
         {isPassword && (
-          <button className="absolute right-3 top-1/2 -translate-y-1/2">
+          <button
+            type="button"
+            aria-label={type === 'password' ? '비밀번호 보기' : '비밀번호 숨기기'}
+            className="absolute right-3 top-1/2 -translate-y-1/2"
+          >
             {type === 'password' ? (
               <EyeOff
                 onClick={handlePasswordVisibleChange}
@@ -72,6 +78,7 @@ const AuthInput = ({
             )}
           </button>
         )}
+
         {error && <p className="mt-1 text-[14px] font-medium text-red">{error}</p>}
       </div>
     </div>

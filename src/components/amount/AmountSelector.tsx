@@ -19,7 +19,7 @@ const AmountSelector = ({ balance, amount, onInputChange, onAddAmount }: Props) 
         placeholder="금액을 입력하세요"
         value={amount}
         onChange={onInputChange}
-        className="mb-3 w-full rounded-lg border border-gray-300 bg-gray-100 p-3 text-center text-lg focus-visible:border-gray-400 focus-visible:outline-none"
+        className="mb-3 w-full rounded-lg border border-gray-300 bg-gray-100 p-3 text-center text-lg text-black-to-white focus-visible:border-gray-400 focus-visible:outline-none"
       />
 
       <p className="mb-6 text-lg text-black-to-white">
