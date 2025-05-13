@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import AuthInput from '@/components/common/AuthInput';
 import BaseButton from '@/components/common/BaseButton';
 import ConfirmModal from '@/components/common/ConfirmModal';
+import { INPUT_DESCRIPTIONS } from '@/constants/inputDescriptions';
 import { PLACEHOLDERS } from '@/constants/placeholders';
 import useSignUp from '@/hooks/useSignUp';
 
@@ -20,6 +22,8 @@ const SignUpPage = () => {
     isIdDuplicateSuccessModalOpen,
     handleIdDuplicateSuccessModalClose,
   } = useSignUp();
+
+  const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
 
   return (
     <>
@@ -44,6 +48,9 @@ const SignUpPage = () => {
               error={errors.id}
               propType="text"
               onChange={(e) => handleChange('id', e.target.value)}
+              description={INPUT_DESCRIPTIONS.id}
+              openPopoverId={openPopoverId}
+              setOpenPopoverId={setOpenPopoverId}
             />
             <BaseButton size="fit" disabled={!isIdValid} onClick={checkDuplicate}>
               중복 확인
@@ -60,6 +67,9 @@ const SignUpPage = () => {
             propType="password"
             onChange={(e) => handleChange('password', e.target.value)}
             isPassword
+            description={INPUT_DESCRIPTIONS.password}
+            openPopoverId={openPopoverId}
+            setOpenPopoverId={setOpenPopoverId}
           />
           <AuthInput
             title="비밀번호 확인"

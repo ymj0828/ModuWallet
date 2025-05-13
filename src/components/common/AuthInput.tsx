@@ -1,6 +1,8 @@
-import { ChangeEvent, HTMLAttributes, useState } from 'react';
+import { ChangeEvent, HTMLAttributes, type ReactNode, useState } from 'react';
 
 import { Eye, EyeOff } from 'lucide-react';
+
+import InputDescriptionPopover from './InputDescriptionPopover';
 
 interface AuthInputProps {
   title: string;
@@ -14,6 +16,9 @@ interface AuthInputProps {
   maxLength?: number;
   inputMode?: HTMLAttributes<HTMLInputElement>['inputMode'];
   isPassword?: boolean;
+  description?: ReactNode;
+  openPopoverId?: string | null;
+  setOpenPopoverId?: (id: string | null) => void;
 }
 
 const AuthInput = ({
@@ -28,6 +33,9 @@ const AuthInput = ({
   maxLength,
   inputMode,
   isPassword,
+  description,
+  openPopoverId,
+  setOpenPopoverId,
 }: AuthInputProps) => {
   const [type, setType] = useState<'text' | 'password'>(propType);
 
@@ -37,12 +45,23 @@ const AuthInput = ({
 
   return (
     <div className="w-full">
-      <label
-        className="mb-2 inline-block text-[18px] font-medium text-black-to-white"
-        htmlFor={name}
-      >
-        {title}
-      </label>
+      <div className="flex items-center gap-2">
+        <label
+          className="mb-2 inline-block text-[18px] font-medium text-black-to-white"
+          htmlFor={name}
+        >
+          {title}
+        </label>
+
+        {description && (
+          <InputDescriptionPopover
+            id={name}
+            description={description}
+            openPopoverId={openPopoverId!}
+            setOpenPopoverId={setOpenPopoverId!}
+          />
+        )}
+      </div>
 
       <div className="relative h-14">
         <input
@@ -68,12 +87,12 @@ const AuthInput = ({
             {type === 'password' ? (
               <EyeOff
                 onClick={handlePasswordVisibleChange}
-                className="text-gray-300 hover:text-gray-500"
+                className="text-gray-300 hover:text-gray-400"
               />
             ) : (
               <Eye
                 onClick={handlePasswordVisibleChange}
-                className="text-gray-300 hover:text-gray-500"
+                className="text-gray-300 hover:text-gray-400"
               />
             )}
           </button>
