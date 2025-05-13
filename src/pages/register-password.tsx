@@ -1,7 +1,10 @@
+import { useState } from 'react';
+
 import AuthInput from '@/components/common/AuthInput';
 import BaseButton from '@/components/common/BaseButton';
 import ConfirmModal from '@/components/common/ConfirmModal';
 import PageHeader from '@/components/common/PageHeader';
+import { INPUT_DESCRIPTIONS } from '@/constants/inputDescriptions';
 import { PLACEHOLDERS } from '@/constants/placeholders';
 import useRegisterPassword from '@/hooks/useRegisterPassword';
 
@@ -15,6 +18,8 @@ const RegisterPasswordPage = () => {
     handleRegisterPassword,
     handleModalClose,
   } = useRegisterPassword();
+
+  const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
 
   return (
     <>
@@ -32,6 +37,9 @@ const RegisterPasswordPage = () => {
           inputMode="numeric"
           onChange={(e) => handleChange('password', e.target.value)}
           isPassword
+          description={INPUT_DESCRIPTIONS.transferPassword}
+          openPopoverId={openPopoverId}
+          setOpenPopoverId={setOpenPopoverId}
         />
         <AuthInput
           title="비밀번호 확인"
@@ -46,7 +54,7 @@ const RegisterPasswordPage = () => {
           isPassword
         />
       </div>
-      
+
       <BaseButton
         size="full"
         onClick={handleRegisterPassword}
